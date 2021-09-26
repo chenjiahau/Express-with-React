@@ -1,34 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import CountProvider from "./stores/count/count-provider";
+import Count from "./components/count/count";
+import Increase from "./components/increase/increase";
+import Subtract from "./components/subtract/subtract";
 
 function App() {
-  const [message, setMessage] = useState('');
-
-  const callBackendAPI = async () => {
-    const response = await fetch('/express-test');
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message) 
-    }
-
-    return body;
+  const submitHandler = (event) => {
+    event.preventDefault();
   };
 
-  useEffect(() => {
-    callBackendAPI()
-      .then((res) => {
-        setMessage(res.message)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   return (
-    <div>
-      {message}
-    </div>
+    <CountProvider>
+      <div className='container'>
+        <form onSubmit={submitHandler}>
+          <Count />
+          <Increase />
+          <Subtract />
+        </form>
+      </div>
+    </CountProvider>
   );
 }
 
