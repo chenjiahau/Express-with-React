@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const callBackendAPI = async () => {
-    const response = await fetch('/express-test');
+    const response = await fetch("/express-test");
     const body = await response.json();
 
     if (response.status !== 200) {
-      throw Error(body.message) 
+      throw Error(body.message);
     }
 
     return body;
@@ -18,18 +19,14 @@ function App() {
   useEffect(() => {
     callBackendAPI()
       .then((res) => {
-        setMessage(res.message)
+        setMessage(res.message);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  return (
-    <div>
-      {message}
-    </div>
-  );
+  return <div>{message}</div>;
 }
 
 export default App;
