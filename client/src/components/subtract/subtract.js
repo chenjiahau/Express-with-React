@@ -1,5 +1,7 @@
 import React, { Fragment, useContext, useRef } from "react";
 import CountContext from "../../stores/count/count-context";
+import Input from '../UI/Input';
+import Button from '../UI/Button';
 
 const Subtract = (props) => {
   const countCtx = useContext(CountContext);
@@ -18,25 +20,19 @@ const Subtract = (props) => {
     <Fragment>
       <div className='form-group'>
         <label htmlFor='subNum'>Subtract Number</label>
-        <input
+        <Input
           ref={inputRef}
           id='subtractNum'
           type='number'
-          className='form-control'
-          min='1'
-          max='100'
-          defaultValue={1}
-          onKeyPress={onKeypressHandler}
+          defaultValue='1'
+          keypressHandler={onKeypressHandler}
         />
       </div>
       <div className='form-group'>
-        <button
-          type='button'
-          className='btn btn-primary'
-          onClick={onClickHandler}
-        >
-          Subtract
-        </button>
+        <Button
+          title='Subtract'
+          clickHandler={onClickHandler}
+        />
       </div>
     </Fragment>
   );

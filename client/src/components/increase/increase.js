@@ -1,5 +1,7 @@
 import React, { Fragment, useContext, useRef } from "react";
 import CountContext from "../../stores/count/count-context";
+import Input from '../UI/Input';
+import Button from '../UI/Button';
 
 const Increase = (props) => {
   const countCtx = useContext(CountContext);
@@ -18,25 +20,19 @@ const Increase = (props) => {
     <Fragment>
       <div className='form-group'>
         <label htmlFor='addNum'>Increase Number</label>
-        <input
+        <Input
           ref={inputRef}
           id='increaseNum'
           type='number'
-          min='1'
-          max='100'
-          className='form-control'
-          defaultValue={1}
-          onKeyPress={onKeypressHandler}
+          defaultValue='1'
+          keypressHandler={onKeypressHandler}
         />
       </div>
       <div className='form-group'>
-        <button
-          type='button'
-          className='btn btn-primary'
-          onClick={onClickHandler}
-        >
-          Increase
-        </button>
+        <Button
+          title='Increase'
+          clickHandler={onClickHandler}
+        />
       </div>
     </Fragment>
   );
