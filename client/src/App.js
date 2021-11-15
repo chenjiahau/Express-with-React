@@ -2,10 +2,13 @@ import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import CountProvider from "./stores/count/count-provider";
-import Count from "./components/count/count";
+import { Provider } from "react-redux";
+
+import Counter from "./components/counter/counter";
 import Increase from "./components/increase/increase";
 import Subtract from "./components/subtract/subtract";
+
+import store from "./stores/index";
 
 function App() {
   const submitHandler = (event) => {
@@ -13,15 +16,15 @@ function App() {
   };
 
   return (
-    <CountProvider>
+    <Provider store={store}>
       <div className='container'>
         <form onSubmit={submitHandler}>
-          <Count />
+          <Counter />
           <Increase />
           <Subtract />
         </form>
       </div>
-    </CountProvider>
+    </Provider>
   );
 }
 

@@ -1,38 +1,27 @@
-import React, { Fragment, useContext, useRef } from "react";
-import CountContext from "../../stores/count/count-context";
-import Input from '../UI/Input';
-import Button from '../UI/Button';
+import React, { Fragment, useRef } from "react";
+import { useDispatch } from "react-redux";
 
-const Increase = (props) => {
-  const countCtx = useContext(CountContext);
+import { increment } from "../../stores/actions/counter";
+
+import Input from "../UI/Input";
+import Button from "../UI/Button";
+
+const Increase = () => {
   const inputRef = useRef();
-
-  const onKeypressHandler = (event) => {
-    if (event.charCode !== 13) return;
-    countCtx.increase(+event.target.value);
-  };
+  const dispatch = useDispatch();
 
   const onClickHandler = () => {
-    countCtx.increase(+inputRef.current.value);
+    dispatch(increment(+inputRef.current.value));
   };
 
   return (
     <Fragment>
       <div className='form-group'>
         <label htmlFor='addNum'>Increase Number</label>
-        <Input
-          ref={inputRef}
-          id='increaseNum'
-          type='number'
-          defaultValue='1'
-          keypressHandler={onKeypressHandler}
-        />
+        <Input ref={inputRef} id='increaseNum' type='number' defaultValue='1' />
       </div>
       <div className='form-group'>
-        <Button
-          title='Increase'
-          clickHandler={onClickHandler}
-        />
+        <Button title='Increase' clickHandler={onClickHandler} />
       </div>
     </Fragment>
   );
