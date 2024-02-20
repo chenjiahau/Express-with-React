@@ -27,21 +27,25 @@ input {
   padding-top: 64px;
 }
 
-.list-header-container {
+.form-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
   margin-bottom: 16px;
-  padding: 0 4px;
+  padding: 0 8px;
+
+  .label {
+    width: 20%;
+    font-weight: bold;
+  }
+
+  .input {
+    width: 60%;
+  }
 
   .action {
-    display: flex;
-    gap: 8px;
-
-    input {
-      width: 320px;
-    }
+    width: 20%;
   }
 }
 
