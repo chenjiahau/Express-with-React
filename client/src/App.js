@@ -1,28 +1,47 @@
 import './App.scss';
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { login, addTask, deleteTask } from './store';
+import {
+  log, loading, login, addTask, deleteTask,
+  getIsLogin, getIsLoading, getTasks
+} from './store/reducers/task';
+import store from './store';
 
 function App() {
   const dispatch = useDispatch();
-  const { isLoading, isLogin, tasks } = useSelector((state) => state.task);
-  const [newTask, setNewTask] = React.useState("");
-  const [account, setAccount] = React.useState("");
+  const isLoading = useSelector(getIsLoading);
+  const isLogin = useSelector(getIsLogin);
+  const tasks = useSelector(getTasks);
+  const [newTask, setNewTask] = useState("");
+  const [account, setAccount] = useState("");
 
   const handleLogin = () => {
     if (!account) return;
-    dispatch(login(account));
+    dispatch(loading());
+    setTimeout(() => {
+      dispatch(login(account));
+    }, 1000);
   }
 
   const handleAddTask = () => {
     if (!newTask) return;
     setNewTask("");
-    dispatch(addTask(newTask));
+    dispatch(loading());
+    setTimeout(() => {
+      dispatch(addTask(newTask));
+    }, 1000);
   }
 
   const handleDeleteTask = (id) => {
-    dispatch(deleteTask(id));
+    dispatch(loading());
+    setTimeout(() => {
+      dispatch(deleteTask(id));
+    }, 1000);
   }
+
+  useEffect(() => {
+    store.dispatch(log(new Date().toISOString()));
+  }, [tasks]);
 
   return (
     <div className="container">
