@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
 
-import { getTasks } from "../services";
+import { getTasks, deleteTask } from "../../services";
 
 const TaskList = () => {
+  const queryClient = useQueryClient();
   const {
     isLoading,
     data: tasks,
@@ -13,13 +15,28 @@ const TaskList = () => {
     queryFn: getTasks,
   });
 
-  const handleDeleteTask = () => {
+  const {
+    isLoading: isDeleting,
+    mutate: deleteTaskMutation,
+  } = useMutation({
+    mutationFn: deleteTask,
+    onError: (err) => {
+      toast.error(err);
+    },
+    onSuccess: (data) => {
+      toast.success(`Task deleted: [${data.id}]`);
+      queryClient.invalidateQueries('tasks');
+    }
+  });
+
+  const handleDeleteTask = (id) => {
+    deleteTaskMutation(id);
   }
 
   return (
     <div className="block">
       {
-        isLoading ? (
+        (isLoading || isDeleting) ? (
           <>Loading</>
         ) : (
           <div>
@@ -27,10 +44,10 @@ const TaskList = () => {
               tasks.map((task) => (
                 <div className="list-container" key={task.id}>
                   <div className="label" >
-                    {task.title}
+                    [{task.id}]{task.title}
                   </div>
                   <div className="action">
-                    <button onClick={handleDeleteTask}>
+                    <button onClick={() => handleDeleteTask(task.id)}>
                       Delete
                     </button>
                   </div>

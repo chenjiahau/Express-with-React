@@ -3,8 +3,6 @@ import express from 'express';
 const router = express.Router();
 
 const tasks = [
-  { id: 1, title: 'Task 1', completed: true },
-  { id: 2, title: 'Task 2', completed: true },
 ];
 
 /* GET home page. */
@@ -18,6 +16,19 @@ router.get('/express-test', function (req, res, next) {
 
 router.get('/tasks', function (req, res) {
   res.send({ data: tasks });
+});
+
+router.post('/tasks', function (req, res) {
+  const task = req.body;
+  tasks.push(task);
+  res.send({ data: task });
+});
+
+router.delete('/tasks/:id', function (req, res) {
+  const { id } = req.params;
+  const index = tasks.findIndex(task => task.id === Number(id));
+  tasks.splice(index, 1);
+  res.send({ data: id });
 });
 
 export default router;

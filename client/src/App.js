@@ -1,5 +1,6 @@
 import "./App.scss";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Toaster } from 'react-hot-toast';
 
 import AddTask from './components/AddTask';
 import TaskList from "./components/TaskList";
@@ -39,6 +40,8 @@ function App() {
       </div>
       {page.addTask && <AddTask />}
       {page.taskList && <TaskList />}
+
+      <Toaster />
     </div>
 
   );
