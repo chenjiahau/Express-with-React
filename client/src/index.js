@@ -14,7 +14,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 0,
+      staleTime: 30 * 1000,
+      cacheTime: 30 * 1000,
     },
   },
 });
